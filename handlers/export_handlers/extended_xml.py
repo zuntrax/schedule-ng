@@ -10,8 +10,7 @@ log = logging.getLogger(__name__)
 
 
 class ExtendedXMLExportHandler(ExportHandler):
-    @noexcept(log)
-    def run(self, schedule: Schedule) -> bool:
-        path = self.config["path"]
-        content = schedule.to_xml(extended=True)
-        return write_output(path, content)
+    content_type = "application/xml"
+
+    def export(self, schedule: Schedule) -> str:
+        return schedule.to_xml(extended=True)

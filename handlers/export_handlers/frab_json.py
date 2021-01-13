@@ -4,19 +4,17 @@ import json
 from ..base import ExportHandler
 from fahrplan.model.schedule import Schedule
 from fahrplan.datetime import format_duration, format_date, format_datetime, format_time
-from hacks import noexcept
-from util import write_output
 
 
 log = logging.getLogger(__name__)
 
 
 class FrabJsonExportHandler(ExportHandler):
-    @noexcept(log)
-    def run(self, schedule: Schedule) -> bool:
-        path = self.config["path"]
+    content_type = "application/json"
+
+    def export(self, schedule: Schedule) -> str:
         content = self.get_data(schedule)
-        return write_output(path, json.dumps({"schedule": content}, ensure_ascii=False, sort_keys=True, indent=2))
+        return json.dumps({"schedule": content}, ensure_ascii=False, sort_keys=True, indent=2)
 
     def get_data(self, schedule):
         """
