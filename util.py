@@ -46,7 +46,7 @@ def read_input(path: str) -> Union[str, None]:
     else:
         log.info(f'Reading file "{path}".')
         try:
-            with open(path, "r") as f:
+            with open(path, "r", encoding='utf-8-sig') as f:
                 content = f.read()
             return content
         except PermissionError:
